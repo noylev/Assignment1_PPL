@@ -1,0 +1,45 @@
+import {map, reduce} from 'ramda';
+interface Tree<T> {
+    root: T;
+    children: Tree<T>[];
+}
+
+
+    let b: Tree<number> = {
+        root: 1,
+        children: [
+            {root: 2, children: []},
+            {root: 3, children: [
+                {root: 4, children:[]}
+            ]}
+        ]
+    };
+
+
+type Command<T> = (x:T)=>void;
+type Transformer<T1,T2> = (x:T1)=>T2;
+type Predicate<T> = (x:T)=>boolean;
+type Accumulator<T1,T2> = (acc:T1, item:T2)=>T1;
+
+
+const makeLeaf : <T>(v:T)=>Tree<T> =
+    v => {return {root: v, children:[]};}
+    
+const makeTree : <T>(v:T, children:Tree<T>[])=>Tree<T> =
+    (v, children) => { return {root:v, children:children}}
+
+const treeRoot : <T>(t: Tree<T>)=>T =
+    t => t.root;
+
+const treeChildren: <T>(t: Tree<T>)=>Tree<T>[] =
+    t => t.children;
+    
+const treeLeaf : <T>(t: Tree<T>)=>boolean =
+    t => t.children.length === 0;
+
+//const treeMap: <T1,T2>(f: Transformer<T1,T2>, tree: Tree<T1>)=>Tree<T2> = 
+  // (f, tree) => treeLeaf(tree)?
+  //					f(treeRoot(tree)) :
+  //					map(treeMap,treeChildren(tree));
+//treeMap(x=>x+1,b);
+console.log(b);
